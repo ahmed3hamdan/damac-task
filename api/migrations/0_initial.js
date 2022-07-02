@@ -5,16 +5,16 @@
 exports.up = async knex => {
   await knex.schema.createTable("user", table => {
     table.increments();
-    table.string("email");
+    table.text("email");
     table.binary("password");
     table.timestamps(true, true, true);
   });
 
   await knex.schema.createTable("book", table => {
     table.increments();
-    table.string("name");
-    table.string("imageUrl");
-    table.string("author");
+    table.text("name");
+    table.text("imageUrl");
+    table.text("author");
     table.integer("pages");
     table.double("price");
     table.timestamps(true, true, true);
