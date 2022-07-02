@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const authenticate = require("../../middlewares/authenticate");
+const isUser = require("../../middlewares/isUser");
 const createBook = require("./routes/createBook");
 const deleteBookById = require("./routes/deleteBookById");
 const getBookById = require("./routes/getBookById");
@@ -9,6 +11,7 @@ const validateBook = require("./middlewares/validateBook");
 const validateParams = require("./middlewares/validateParams");
 
 const router = express.Router();
+router.use(authenticate).use(isUser);
 
 // Create a new book
 router.post("/", bodyParser.json(), validateBook, createBook);
