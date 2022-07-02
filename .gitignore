@@ -1,0 +1,5 @@
+# Envitoment variables
+.env
+
+# IDE
+.idea
