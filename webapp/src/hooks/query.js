@@ -30,3 +30,19 @@ export const useProfileQuery = options => {
     options
   );
 };
+
+export const useBooksQuery = options => {
+  const { token } = useAuth();
+  return useQuery(
+    ["book"],
+    async () => {
+      const { data } = await axios.get("/book", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return data;
+    },
+    options
+  );
+};

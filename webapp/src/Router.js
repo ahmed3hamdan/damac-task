@@ -10,7 +10,8 @@ const Router = () => (
       <Route index element={<Navigate to="books" />} />
       <Route path="books" element={<BooksPage />}>
         <Route path="create" element="new" />
-        <Route path=":bookId" element="edit" />
+        <Route path="edit/:bookId" element="edit" />
+        <Route path="delete/:bookId" element="delete" />
       </Route>
     </Route>
     <Route path="login" exact element={<LoginPage />} />
