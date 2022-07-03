@@ -46,3 +46,35 @@ export const useBooksQuery = options => {
     options
   );
 };
+
+export const useBookByIdQuery = (bookId, options) => {
+  const { token } = useAuth();
+  return useQuery(
+    ["book", bookId],
+    async () => {
+      const { data } = await axios.get(`/book/${bookId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return data;
+    },
+    options
+  );
+};
+
+export const useBookDeleteMutation = (bookId, options) => {
+  const { token } = useAuth();
+  return useMutation(
+    ["delete", bookId],
+    async () => {
+      const { data } = await axios.delete(`/book/${bookId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return data;
+    },
+    options
+  );
+};

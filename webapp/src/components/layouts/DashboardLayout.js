@@ -45,7 +45,7 @@ const DashboardHeader = () => {
           compact
           uppercase
           component={Link}
-          to="/books"
+          to="/"
           leftIcon={<Home />}
           size="xl"
           color="teal"

@@ -9,6 +9,9 @@ import {
 } from "@mantine/core";
 import { Book2, Edit, Trash } from "tabler-icons-react";
 import { Link } from "react-router-dom";
+import { useQueryClient } from "react-query";
+import { useModals } from "@mantine/modals";
+import { useBookDeleteMutation } from "../../hooks/query";
 
 const useStyles = createStyles({
   textEllipsis: {
@@ -19,9 +22,33 @@ const useStyles = createStyles({
 });
 
 const BookCard = ({ book: { id, name, author, imageUrl, pages, price } }) => {
+  const modals = useModals();
   const { classes } = useStyles();
+  const queryClient = useQueryClient();
+  const { mutate, isLoading } = useBookDeleteMutation(id, {
+    onSuccess: () => queryClient.invalidateQueries(["book"]),
+    onError: error =>
+      modals.openModal({
+        title: "Failed to delete",
+        children: <Text color="red">{error.message}</Text>,
+      }),
+  });
+
+  const handleDeleteClick = () =>
+    modals.openConfirmModal({
+      title: "Delete Confirmation",
+      children: (
+        <Text>
+          Are you sure you want to delete <b>"{name}"</b>?
+        </Text>
+      ),
+      labels: { confirm: "Delete", cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      onConfirm: mutate,
+    });
+
   return (
-    <Card shadow="sm">
+    <Card shadow="xs">
       <Card.Section>
         <Image
           height={320}
@@ -57,11 +84,11 @@ const BookCard = ({ book: { id, name, author, imageUrl, pages, price } }) => {
           Edit
         </Button>
         <Button
-          component={Link}
-          to={`delete/${id}`}
           variant="light"
           color="red"
           leftIcon={<Trash />}
+          onClick={handleDeleteClick}
+          loading={isLoading}
         >
           Delete
         </Button>
