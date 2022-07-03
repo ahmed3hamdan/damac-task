@@ -5,15 +5,18 @@ import { AuthProvider } from "./contexts/authContext";
 import queryClient from "./lib/queryClient";
 import Router from "./Router";
 import defaultTheme from "./themes/default";
+import { ModalsProvider } from "@mantine/modals";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <MantineProvider withGlobalStyles withNormalizeCSS theme={defaultTheme}>
-      <AuthProvider>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
-      </AuthProvider>
+      <ModalsProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+        </AuthProvider>
+      </ModalsProvider>
     </MantineProvider>
   </QueryClientProvider>
 );

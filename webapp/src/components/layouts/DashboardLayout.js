@@ -8,28 +8,37 @@ import {
   Button,
   Menu,
 } from "@mantine/core";
+import { useModals } from "@mantine/modals";
 import { UserProvider, useUser } from "../../contexts/userContext";
 import { Home, Logout, User } from "tabler-icons-react";
 import { useAuth } from "../../contexts/authContext";
 
-const useStyles = createStyles(theme => ({
-  header: {},
+const useStyles = createStyles({
   headerContainer: {
     height: 60,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
   },
-}));
+});
 
 const DashboardHeader = () => {
+  const modals = useModals();
   const { classes } = useStyles();
-  const user = useUser();
   const { setToken } = useAuth();
-  const handleLogOut = () => setToken(null);
+  const user = useUser();
+
+  const handleLogOutClick = () =>
+    modals.openConfirmModal({
+      title: "Log Out",
+      children: "Are you sure you want to log out?",
+      labels: { confirm: "Log out", cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      onConfirm: () => setToken(null),
+    });
 
   return (
-    <Header className={classes.header}>
+    <Header>
       <Container className={classes.headerContainer}>
         <Button
           variant="subtle"
@@ -54,7 +63,7 @@ const DashboardHeader = () => {
           <Menu.Item
             color="red"
             icon={<Logout size={14} />}
-            onClick={handleLogOut}
+            onClick={handleLogOutClick}
           >
             Log out
           </Menu.Item>
