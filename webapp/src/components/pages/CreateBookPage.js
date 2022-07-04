@@ -1,10 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Anchor, Breadcrumbs, Container, Space, Text } from "@mantine/core";
 import BookForm from "../forms/BookForm";
 import { useAddBookMutation } from "../../hooks/query";
+import { useQueryClient } from "react-query";
 
 const CreateBookPage = () => {
-  const { mutate, isLoading, isError, error } = useAddBookMutation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { mutate, isLoading, isError, error } = useAddBookMutation({
+    async onSuccess() {
+      await queryClient.invalidateQueries(["book"]);
+      navigate("/");
+    },
+  });
 
   return (
     <Container>

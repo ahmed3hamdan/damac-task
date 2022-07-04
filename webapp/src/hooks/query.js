@@ -82,3 +82,15 @@ export const useAddBookMutation = options => {
     return data;
   }, options);
 };
+
+export const useUpdateBookMutation = (bookId, options) => {
+  const { token } = useAuth();
+  return useMutation(async book => {
+    const { data } = await axios.put(`/book/${bookId}`, book, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  }, options);
+};
