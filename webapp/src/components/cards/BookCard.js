@@ -11,7 +11,7 @@ import { Book2, Edit, Trash } from "tabler-icons-react";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import { useModals } from "@mantine/modals";
-import { useBookDeleteMutation } from "../../hooks/query";
+import { useDeleteBookMutation } from "../../hooks/query";
 
 const useStyles = createStyles({
   textEllipsis: {
@@ -25,7 +25,7 @@ const BookCard = ({ book: { id, name, author, imageUrl, pages, price } }) => {
   const modals = useModals();
   const { classes } = useStyles();
   const queryClient = useQueryClient();
-  const { mutate, isLoading } = useBookDeleteMutation(id, {
+  const { mutate, isLoading } = useDeleteBookMutation(id, {
     onSuccess: () => queryClient.invalidateQueries(["book"]),
     onError: error =>
       modals.openModal({

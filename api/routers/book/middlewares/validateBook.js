@@ -5,7 +5,7 @@ const validateBook = ajv.compile({
   type: "object",
   properties: {
     name: { type: "string", maxLength: 300 },
-    imageUrl: { type: "string", format: "url", default: null },
+    imageUrl: { type: "string", format: "url", nullable: true, default: null },
     author: { type: "string", maxLength: 100 },
     pages: { type: "integer", minimum: 0 },
     price: { type: "number", minimum: 0 },
