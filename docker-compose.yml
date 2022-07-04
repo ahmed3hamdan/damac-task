@@ -27,7 +27,7 @@ services:
   http:
     image: nginx:1.22-alpine
     ports:
-      - "80:80"
+      - ${APP_PORT}:80
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
