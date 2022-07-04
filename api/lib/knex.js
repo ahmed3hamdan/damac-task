@@ -21,10 +21,15 @@ knex.migrate
           password: bcrypt.hashSync(config.INITIAL_USER_PASSWORD, 12),
         })
         .then(() => {
-          console.log(`created default user with email "${config.INITIAL_USER_EMAIL}".`);
+          console.log(
+            `created default user with email "${config.INITIAL_USER_EMAIL}".`
+          );
         });
     }
   })
-  .catch(err => console.log(err.message));
+  .catch(err => {
+    console.log(err.message);
+    process.exit(1);
+  });
 
 module.exports = knex;

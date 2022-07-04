@@ -17,6 +17,7 @@ services:
     build: ./api
     depends_on:
       - database
+    restart: unless-stopped
     environment:
       - INITIAL_USER_EMAIL=$INITIAL_USER_EMAIL
       - INITIAL_USER_PASSWORD=$INITIAL_USER_PASSWORD
